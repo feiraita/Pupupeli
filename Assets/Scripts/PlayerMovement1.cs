@@ -4,6 +4,7 @@ public class PlayerMovement1 : MonoBehaviour
 {
     private Rigidbody2D body;
     private SpriteRenderer characterSprite;
+    private Animator anim;
 
     [SerializeField] private Transform groundCheck;
     private float groundRadius = 0.2f;
@@ -21,6 +22,8 @@ public class PlayerMovement1 : MonoBehaviour
     {
         body = GetComponent<Rigidbody2D>();
         characterSprite = GetComponent<SpriteRenderer>();
+
+        anim = GetComponent<Animator>();
     }
 
     void OnDrawGizmosSelected()
@@ -40,6 +43,14 @@ public class PlayerMovement1 : MonoBehaviour
         // Liikkuminen sivuille
         float horizontalInput = Input.GetAxis("Horizontal");
         body.linearVelocity = new Vector2(horizontalInput * speed, body.linearVelocity.y);
+        if(horizontalInput != 0)
+        {
+            anim.SetBool("isMoving", true);
+        }
+        else {
+            anim.SetBool("isMoving", false);
+        }
+
         // Hyppääminen (like a jetpack kunnes kehitetään paremmaksi)
         // Ground check
         isGrounded = Physics2D.OverlapCircle(
