@@ -7,7 +7,7 @@ public class MoveCamera : MonoBehaviour
     void LateUpdate()
     {
         transform.position = new Vector3(
-            playerTransform.position.x,
+            0,
             playerTransform.position.y + 2,
             transform.position.z
         );
