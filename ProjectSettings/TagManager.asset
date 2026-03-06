@@ -44,5 +44,8 @@ TagManager:
   - name: ground
     uniqueID: 3959911697
     locked: 0
+  - name: sprites
+    uniqueID: 1990864257
+    locked: 0
   m_RenderingLayers:
   - Default
