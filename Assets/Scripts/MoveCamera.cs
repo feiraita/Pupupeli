@@ -8,7 +8,7 @@ public class MoveCamera : MonoBehaviour
     {
         transform.position = new Vector3(
             0,
-            playerTransform.position.y + 2,
+            playerTransform.position.y + 1,
             transform.position.z
         );
     }
