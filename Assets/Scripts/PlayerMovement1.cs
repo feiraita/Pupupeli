@@ -11,8 +11,7 @@ public class PlayerMovement1 : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     private bool isGrounded;
     private float jumpForce = 12f;
-    
-    
+
     
     // Tää SerializeField laittaa speed homman näkymään unityssä liukukytkimenä niin voi testailla nopeutta helpommin
     [SerializeField]
@@ -38,11 +37,17 @@ public class PlayerMovement1 : MonoBehaviour
     // protected float zScale = 0f;
 
     // Update is called once per frame
+
+        // pupun liikkumisrajat (sivurajat)
+    [SerializeField] float minX = -1000;
+    [SerializeField] float maxX = 1000;
     private void Update()
     {
         // Liikkuminen sivuille
         float horizontalInput = Input.GetAxis("Horizontal");
+        Debug.Log(horizontalInput);
         body.linearVelocity = new Vector2(horizontalInput * speed, body.linearVelocity.y);
+        
         if(horizontalInput != 0)
         {
             anim.SetBool("isMoving", true);
@@ -51,7 +56,6 @@ public class PlayerMovement1 : MonoBehaviour
             anim.SetBool("isMoving", false);
         }
 
-        // Hyppääminen (like a jetpack kunnes kehitetään paremmaksi)
         // Ground check
         isGrounded = Physics2D.OverlapCircle(
             groundCheck.position,
@@ -63,7 +67,7 @@ public class PlayerMovement1 : MonoBehaviour
             body.linearVelocity = new Vector2(body.linearVelocity.x, jumpForce);
         }
 
-        // if-else if - Flippaa pupun siihen suuntaan mihin liikutaan
+        // Sprite flip
         if (horizontalInput > 0.01f){
             characterSprite.flipX = true;
         }
@@ -72,6 +76,9 @@ public class PlayerMovement1 : MonoBehaviour
             characterSprite.flipX = false;
         }
 
+        // Estä menemästä ruudun ulkopuolelle
+        float clampedX = Mathf.Clamp(transform.position.x, minX, maxX);
+        transform.position = new Vector3(clampedX, transform.position.y, transform.position.z);
     }
 }
     // // Start is called once before the first execution of Update after the MonoBehaviour is created
